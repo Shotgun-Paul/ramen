@@ -4,7 +4,8 @@
   "description": "Selenium-based scripts to order food",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha",
+    "awesome": "mocha --parallel --reporter mochawesome"
   },
   "repository": {
     "type": "git",
@@ -18,8 +19,11 @@
   "dependencies": {
     "chai": "^4.3.4",
     "chai-as-promised": "^7.1.1",
-    "mocha": "^8.3.2",
     "mochawesome": "^6.2.2",
-    "selenium": "^2.20.0"
+    "selenium": "^2.20.0",
+    "selenium-webdriver": "*"
+  },
+  "devDependencies": {
+    "mocha": "^8.3.2"
   }
 }
