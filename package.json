@@ -1,0 +1,25 @@
+{
+  "name": "ramen",
+  "version": "1.0.0",
+  "description": "Selenium-based scripts to order food",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ramen"
+  },
+  "keywords": [
+    "ramen"
+  ],
+  "author": "powergore",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.3.4",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^8.3.2",
+    "mochawesome": "^6.2.2",
+    "selenium": "^2.20.0"
+  }
+}
