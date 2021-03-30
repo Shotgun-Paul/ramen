@@ -8,17 +8,25 @@ const { Options } = require('selenium-webdriver/chrome');
 var should = chai.should();
 chai.use(chaiAsPromised);
 
+// kolhoz
+var productId_1 = '1600412736308'; // Рамен с курицей в кисло-сладком соусе
+var productId_2 = '1600672755644'; // Рамен c говядиной в соево-пряном соусе
+var productId_3 = '1601916310521'; // Крылышки
+var productId_4 = '1600412331036'; // Рамен классический с яйцом и луком
+
+// var selector = require('../utils/locators');
+
 // Here comes the Mocha
 
 describe('Home page scenarios', function () {
-    // this.timeout(100000);
+    this.timeout(100000);
 
     this.beforeAll(async function (){
         page = new Page();
     })
 
     this.afterAll(async function (){
-        await page.quit();
+        // await page.quit();
     })
 
     beforeEach(async function () {
@@ -27,46 +35,36 @@ describe('Home page scenarios', function () {
     });
 
     afterEach(async function () {
-        await page.driver.sleep(3000);
+        // await page.driver.sleep(3000);
     });
 
-    it('Test check 1', async function () {
-        await driver.wait(until.elementLocated(By.css('[data-product-lid="1600412736308"] > a.js-product-link')), 15000);
-        var ramen1 = await driver.findElement(By.css('[data-product-lid="1600412736308"] > a.js-product-link'));
-        
-        await page.driver.sleep(3000); // kolhoz
-        await ramen1.click();
+    it('Adding items to cart', async function () {
+        var result;
 
-        await driver.wait(until.elementLocated(By.css('#t754__product-1600412736308 > div > div.t754__col_right.t754__wrapper.t-col.t-col_6.t-align_left > div.t754__btn-wrapper > a')), 15000);
-        var addToCart = await driver.findElement(By.css('#t754__product-1600412736308 > div > div.t754__col_right.t754__wrapper.t-col.t-col_6.t-align_left > div.t754__btn-wrapper > a'));
+        await page.addItemToCart(productId_1);
+        await page.addItemToCart(productId_2);
+        result = await page.addItemToCart(productId_3); //is it kolhoz?
 
-        await addToCart.click();
+        // result.should.equal('3');
     });
 
-    it('Test check 2', async function () {
-        await driver.wait(until.elementLocated(By.css('[data-product-lid="1600672755644"] > a.js-product-link')), 15000);
-        var ramen1 = await driver.findElement(By.css('[data-product-lid="1600672755644"] > a.js-product-link'));
-        
-        await page.driver.sleep(3000); // kolhoz
-        await ramen1.click();
+    it('Check order', async function () {
+        var expectedResult = ['Рамен с курицей в кисло-сладком соусе', 'Рамен c говядиной в соево-пряном соусе', 'Крылышки']; // kolhoz
+        var actualResult = await page.checkOrderList();
+        // var orderSum = await page.checkSum();
 
-        await driver.wait(until.elementLocated(By.css('#t754__product-1600672755644 > div > div.t754__col_right.t754__wrapper.t-col.t-col_6.t-align_left > div.t754__btn-wrapper > a')), 15000);
-        var addToCart = await driver.findElement(By.css('#t754__product-1600672755644 > div > div.t754__col_right.t754__wrapper.t-col.t-col_6.t-align_left > div.t754__btn-wrapper > a'));
+        // if (orderSum < 700) {
+        //     throw new Error(`You should order something else, buddy. \n 
+        //     Min order sum is 700 rub, but you got only ${orderSum} rub.`);
+        // }
 
-        await addToCart.click();
+        // JSON.stringify(actualResult).should.equal(JSON.stringify(expectedResult));
     });
 
-    it('Test check 3', async function () {
-        await driver.wait(until.elementLocated(By.css('[data-product-lid="1601916310521"] > a.js-product-link')), 15000);
-        var ramen1 = await driver.findElement(By.css('[data-product-lid="1600672755644"] > a.js-product-link'));
-        
-        await page.driver.sleep(3000); // kolhoz
-        await ramen1.click();
+    it('Submit form', async function () {
+        await page.submitForm();
 
-        await driver.wait(until.elementLocated(By.css('#t754__product-1601916310521 > div > div.t754__col_right.t754__wrapper.t-col.t-col_6.t-align_left > div.t754__btn-wrapper > a')), 15000);
-        var addToCart = await driver.findElement(By.css('#t754__product-1601916310521 > div > div.t754__col_right.t754__wrapper.t-col.t-col_6.t-align_left > div.t754__btn-wrapper > a'));
-        
-        await addToCart.click();
+        // NO TEST
     });
 
 });
