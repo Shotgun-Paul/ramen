@@ -8,17 +8,17 @@ const { Options } = require('selenium-webdriver/chrome');
 var should = chai.should();
 chai.use(chaiAsPromised);
 
-// kolhoz
-var productId_1 = '1600412736308'; // Рамен с курицей в кисло-сладком соусе
-var productId_2 = '1600672755644'; // Рамен c говядиной в соево-пряном соусе
-var productId_3 = '1601916310521'; // Крылышки
-var productId_4 = '1600412331036'; // Рамен классический с яйцом и луком
-
-// var selector = require('../utils/locators');
+var products = require('../utils/products');
+var orderList = [
+    products.product_1,
+    products.product_2,
+    products.product_3,
+    // products.product_4
+];
 
 // Here comes the Mocha
 
-describe('Home page scenarios', function () {
+describe('"Little flower big window" scenarios', function () {
     this.timeout(100000);
 
     this.beforeAll(async function (){
@@ -26,7 +26,8 @@ describe('Home page scenarios', function () {
     })
 
     this.afterAll(async function (){
-        // await page.quit();
+        // await page.driver.sleep(3000);
+        await page.quit();
     })
 
     beforeEach(async function () {
@@ -38,32 +39,31 @@ describe('Home page scenarios', function () {
         // await page.driver.sleep(3000);
     });
 
-    it('Adding items to cart', async function () {
+    it('Add items to cart', async function () {
         var result;
-
-        await page.addItemToCart(productId_1);
-        await page.addItemToCart(productId_2);
-        result = await page.addItemToCart(productId_3); //is it kolhoz?
-
-        // result.should.equal('3');
+        for (let i = 0; i < orderList.length; i++) {
+            result = await page.addItemToCart(orderList[i].id)
+        }
+        result.should.equal(orderList.length);
     });
 
     it('Check order', async function () {
-        var expectedResult = ['Рамен с курицей в кисло-сладком соусе', 'Рамен c говядиной в соево-пряном соусе', 'Крылышки']; // kolhoz
+        var expectedResult = orderList;
         var actualResult = await page.checkOrderList();
-        // var orderSum = await page.checkSum();
+        var orderSum = await page.checkSum();
 
-        // if (orderSum < 700) {
-        //     throw new Error(`You should order something else, buddy. \n 
-        //     Min order sum is 700 rub, but you got only ${orderSum} rub.`);
-        // }
+        if (orderSum < 700) {
+            throw new Error(`You should order something else, buddy. \r 
+            Min order sum for your location is 700 rub, but you got only ${orderSum} rub in cart.`);
+        }
 
-        // JSON.stringify(actualResult).should.equal(JSON.stringify(expectedResult));
+        for (let i = 0; i < actualResult.length; i++) {
+            JSON.stringify(actualResult[i]).should.equal(JSON.stringify(expectedResult[i].info));
+        }
     });
 
     it('Submit form', async function () {
         await page.submitForm();
-
         // NO TEST
     });
 
