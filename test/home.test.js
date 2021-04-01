@@ -26,7 +26,7 @@ describe('"Little flower big window" scenarios', function () {
     })
 
     this.afterAll(async function (){
-        // await page.driver.sleep(3000);
+        await page.driver.sleep(3000);
         await page.quit();
     })
 
@@ -36,7 +36,7 @@ describe('"Little flower big window" scenarios', function () {
     });
 
     afterEach(async function () {
-        // await page.driver.sleep(3000);
+        await page.driver.sleep(3000);
     });
 
     it('Add items to cart', async function () {
