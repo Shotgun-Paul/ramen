@@ -18,10 +18,10 @@ var orderList = [
 
 // Here comes the Mocha
 
-describe('"Little flower big window" scenarios', function () {
+describe('"Little flower big window" scenarios', async function () {
     this.timeout(100000);
 
-    this.beforeAll(async function (){
+    this.beforeAll(async function (){ 
         page = new Page();
     })
 
