@@ -17,7 +17,7 @@ Running tests in sequential mode:
 ```sh
 npm run test
 ```
-Running tests in parallel mode with mochawesome reporter
+Running tests in parallel mode with the mochawesome reporter
 ```sh
 npm run awesome
 ```
